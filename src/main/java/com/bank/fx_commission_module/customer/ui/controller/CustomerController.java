@@ -34,7 +34,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public Customer createCustomer(CreateCustomerDto customer) {
+    public Customer createCustomer(@RequestBody CreateCustomerDto customer) {
         return this.createCustomerUseCase.execute(new CreateCustomerUseCaseDto(UUID.randomUUID(), customer.name()));
     }
 
