@@ -6,7 +6,10 @@ import com.bank.fx_commission_module.customer.application.DeactivateCustomerUseC
 import com.bank.fx_commission_module.customer.ui.dto.CreateCustomerDto;
 import com.bank.fx_commission_module.customer.domain.Customer;
 import com.bank.fx_commission_module.customer.domain.CustomerRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -38,8 +41,13 @@ public class CustomerController {
         return this.createCustomerUseCase.execute(new CreateCustomerUseCaseDto(UUID.randomUUID(), customer.name()));
     }
 
-    @PostMapping("/{id}/deactivate")
+    @PatchMapping("/{id}/deactivate")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deactivate(@PathVariable UUID id) {
-        this.deactivateCustomerUseCase.execute(id);
+        try {
+            this.deactivateCustomerUseCase.execute(id);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
     }
 }

@@ -23,6 +23,8 @@ public class DeactivateCustomerUseCase {
             customer.get().setUpdatedAt(LocalDateTime.now());
 
             this.repository.save(customer.get());
+        } else {
+            throw new IllegalArgumentException("Customer with id " + customerId + " not found");
         }
     }
 }
