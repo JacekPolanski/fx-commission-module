@@ -18,9 +18,12 @@ public class Customer {
     @Id
     private UUID id;
     private String name;
+    @Getter(AccessLevel.NONE)
     private boolean active;
     @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
     private LocalDateTime createdAt;
+    @Getter(AccessLevel.NONE)
     private LocalDateTime updatedAt;
 
     public void deactivate() {

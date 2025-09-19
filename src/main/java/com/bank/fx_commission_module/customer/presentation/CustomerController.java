@@ -44,9 +44,9 @@ public class CustomerController {
 
     @PatchMapping("/{id}/deactivate")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deactivate(@PathVariable UUID id) {
+    public Customer deactivate(@PathVariable UUID id) {
         try {
-            this.deactivateCustomerUseCase.execute(id);
+            return this.deactivateCustomerUseCase.execute(id);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
