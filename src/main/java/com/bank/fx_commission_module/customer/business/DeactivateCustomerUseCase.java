@@ -1,10 +1,9 @@
-package com.bank.fx_commission_module.customer.application;
+package com.bank.fx_commission_module.customer.business;
 
-import com.bank.fx_commission_module.customer.domain.Customer;
-import com.bank.fx_commission_module.customer.domain.CustomerRepository;
+import com.bank.fx_commission_module.customer.persistence.Customer;
+import com.bank.fx_commission_module.customer.persistence.CustomerRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,9 +18,7 @@ public class DeactivateCustomerUseCase {
     public void execute(UUID customerId) {
         Optional<Customer> customer = this.repository.findById(customerId);
         if (customer.isPresent()) {
-            customer.get().setActive(false);
-            customer.get().setUpdatedAt(LocalDateTime.now());
-
+            customer.get().deactivate();
             this.repository.save(customer.get());
         } else {
             throw new IllegalArgumentException("Customer with id " + customerId + " not found");

@@ -1,4 +1,4 @@
-package com.bank.fx_commission_module.customer.domain;
+package com.bank.fx_commission_module.customer.persistence;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -22,4 +22,9 @@ public class Customer {
     @Setter(AccessLevel.NONE)
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public void deactivate() {
+        this.active = false;
+        this.updatedAt = LocalDateTime.now();
+    }
 }

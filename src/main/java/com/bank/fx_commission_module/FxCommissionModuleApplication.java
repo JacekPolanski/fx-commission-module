@@ -10,5 +10,4 @@ public class FxCommissionModuleApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FxCommissionModuleApplication.class, args);
 	}
-
 }

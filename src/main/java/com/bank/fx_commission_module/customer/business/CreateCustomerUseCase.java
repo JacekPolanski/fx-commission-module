@@ -1,21 +1,21 @@
-package com.bank.fx_commission_module.customer.application;
+package com.bank.fx_commission_module.customer.business;
 
-import com.bank.fx_commission_module.customer.domain.Customer;
-import com.bank.fx_commission_module.customer.domain.CustomerRepository;
+import com.bank.fx_commission_module.customer.persistence.Customer;
+import com.bank.fx_commission_module.customer.persistence.CustomerRepository;
 import com.bank.fx_commission_module.shared.UseCase;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
 @Service
-public class CreateCustomerUseCase implements UseCase<CreateCustomerUseCaseDto, Customer> {
+public class CreateCustomerUseCase implements UseCase<CreateCustomerUseCaseDTO, Customer> {
     private final CustomerRepository customerRepository;
 
     public CreateCustomerUseCase(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
-    public Customer execute(CreateCustomerUseCaseDto customerDto) {
+    public Customer execute(CreateCustomerUseCaseDTO customerDto) {
         Customer customer = Customer.builder()
                 .id(customerDto.id())
                 .name(customerDto.name())
