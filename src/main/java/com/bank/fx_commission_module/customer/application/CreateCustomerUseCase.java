@@ -1,7 +1,7 @@
 package com.bank.fx_commission_module.customer.application;
 
-import com.bank.fx_commission_module.customer.persistence.Customer;
-import com.bank.fx_commission_module.customer.persistence.CustomerRepository;
+import com.bank.fx_commission_module.customer.domain.Customer;
+import com.bank.fx_commission_module.customer.domain.CustomerRepository;
 import com.bank.fx_commission_module.shared.UseCase;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.bank.fx_commission_module.customer.persistence;
+package com.bank.fx_commission_module.customer.domain.dto;
 
 import java.util.UUID;
 

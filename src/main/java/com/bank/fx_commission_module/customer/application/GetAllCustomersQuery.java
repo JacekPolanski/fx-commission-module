@@ -1,7 +1,7 @@
 package com.bank.fx_commission_module.customer.application;
 
-import com.bank.fx_commission_module.customer.persistence.CustomerDTO;
-import com.bank.fx_commission_module.customer.persistence.CustomerRepository;
+import com.bank.fx_commission_module.customer.domain.dto.CustomerDTO;
+import com.bank.fx_commission_module.customer.domain.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
