@@ -1,9 +1,9 @@
 package com.bank.fx_commission_module.customer.presentation;
 
-import com.bank.fx_commission_module.customer.business.CreateCustomerUseCase;
-import com.bank.fx_commission_module.customer.business.CreateCustomerUseCaseDTO;
-import com.bank.fx_commission_module.customer.business.DeactivateCustomerUseCase;
-import com.bank.fx_commission_module.customer.business.GetAllCustomersQuery;
+import com.bank.fx_commission_module.customer.application.CreateCustomerUseCase;
+import com.bank.fx_commission_module.customer.application.CreateCustomerUseCaseDTO;
+import com.bank.fx_commission_module.customer.application.DeactivateCustomerUseCase;
+import com.bank.fx_commission_module.customer.application.GetAllCustomersQuery;
 import com.bank.fx_commission_module.customer.persistence.Customer;
 import com.bank.fx_commission_module.customer.persistence.CustomerDTO;
 import org.springframework.http.HttpStatus;

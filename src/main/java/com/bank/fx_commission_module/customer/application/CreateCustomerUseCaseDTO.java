@@ -1,4 +1,4 @@
-package com.bank.fx_commission_module.customer.business;
+package com.bank.fx_commission_module.customer.application;
 
 import java.util.UUID;
 
