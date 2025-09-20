@@ -5,22 +5,16 @@ plugins {
 
 group = "com.bank"
 version = "0.0.1-SNAPSHOT"
-description = "FX Commission"
+description = "customer module"
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
-}
-
-configurations {
-	compileOnly {
-		extendsFrom(configurations.annotationProcessor.get())
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencyManagement {
@@ -30,10 +24,10 @@ dependencyManagement {
 }
 
 dependencies {
-    api(project(":shared"))
     api("org.springframework:spring-context")
     api("org.springframework:spring-web")
     api("org.springframework.boot:spring-boot-starter-data-jpa")
+    api(project(":shared"))
 
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
@@ -42,5 +36,5 @@ dependencies {
 }
 
 tasks.withType<Test> {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

@@ -2,13 +2,15 @@ package com.bank.fx_commission_module.customer.application;
 
 import com.bank.fx_commission_module.customer.domain.Customer;
 import com.bank.fx_commission_module.customer.domain.CustomerRepository;
-import com.bank.fx_commission_module.shared.UseCase;
 import org.springframework.stereotype.Service;
+import com.bank.fx_commission_module.shared.UseCase;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class DeactivateCustomerUseCase implements UseCase<UUID, Customer> {
     private final CustomerRepository repository;
 

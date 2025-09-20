@@ -1,7 +1,7 @@
 package com.bank.fx_commission_module.customer.presentation.web;
 
 import com.bank.fx_commission_module.customer.application.CreateCustomerUseCase;
-import com.bank.fx_commission_module.customer.application.CreateCustomerUseCaseDTO;
+import com.bank.fx_commission_module.customer.application.dto.CreateCustomerUseCaseDTO;
 import com.bank.fx_commission_module.customer.application.DeactivateCustomerUseCase;
 import com.bank.fx_commission_module.customer.application.GetAllCustomersQuery;
 import com.bank.fx_commission_module.customer.domain.Customer;
