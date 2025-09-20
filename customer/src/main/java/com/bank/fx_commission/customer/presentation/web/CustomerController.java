@@ -1,12 +1,12 @@
-package com.bank.fx_commission_module.customer.presentation.web;
+package com.bank.fx_commission.customer.presentation.web;
 
-import com.bank.fx_commission_module.customer.application.CreateCustomerUseCase;
-import com.bank.fx_commission_module.customer.application.dto.CreateCustomerUseCaseDTO;
-import com.bank.fx_commission_module.customer.application.DeactivateCustomerUseCase;
-import com.bank.fx_commission_module.customer.application.GetAllCustomersQuery;
-import com.bank.fx_commission_module.customer.domain.Customer;
-import com.bank.fx_commission_module.customer.domain.dto.CustomerDTO;
-import com.bank.fx_commission_module.customer.presentation.web.dto.CreateCustomerDTO;
+import com.bank.fx_commission.customer.application.CreateCustomerUseCase;
+import com.bank.fx_commission.customer.application.dto.CreateCustomerUseCaseDTO;
+import com.bank.fx_commission.customer.application.DeactivateCustomerUseCase;
+import com.bank.fx_commission.customer.application.GetAllCustomersQuery;
+import com.bank.fx_commission.customer.domain.Customer;
+import com.bank.fx_commission.customer.domain.dto.CustomerDTO;
+import com.bank.fx_commission.customer.presentation.web.dto.CreateCustomerDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;

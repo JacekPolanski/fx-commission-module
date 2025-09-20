@@ -1,9 +1,9 @@
-package com.bank.fx_commission_module.customer.application;
+package com.bank.fx_commission.customer.application;
 
-import com.bank.fx_commission_module.customer.application.dto.CreateCustomerUseCaseDTO;
-import com.bank.fx_commission_module.customer.domain.Customer;
-import com.bank.fx_commission_module.customer.domain.CustomerRepository;
-import com.bank.fx_commission_module.shared.UseCase;
+import com.bank.fx_commission.customer.application.dto.CreateCustomerUseCaseDTO;
+import com.bank.fx_commission.customer.domain.Customer;
+import com.bank.fx_commission.customer.domain.CustomerRepository;
+import com.bank.fx_commission.shared.UseCase;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,4 +1,4 @@
-package com.bank.fx_commission_module.customer.domain;
+package com.bank.fx_commission.customer.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

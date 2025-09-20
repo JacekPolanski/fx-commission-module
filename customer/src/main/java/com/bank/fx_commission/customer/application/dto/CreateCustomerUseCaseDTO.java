@@ -1,4 +1,4 @@
-package com.bank.fx_commission_module.customer.application.dto;
+package com.bank.fx_commission.customer.application.dto;
 
 import java.util.UUID;
 
