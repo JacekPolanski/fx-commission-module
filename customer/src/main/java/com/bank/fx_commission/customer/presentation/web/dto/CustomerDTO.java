@@ -1,4 +1,4 @@
-package com.bank.fx_commission.customer.domain.dto;
+package com.bank.fx_commission.customer.presentation.web.dto;
 
 import java.util.UUID;
 
