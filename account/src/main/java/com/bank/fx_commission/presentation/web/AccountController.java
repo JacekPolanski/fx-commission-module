@@ -6,6 +6,7 @@ import com.bank.fx_commission.domain.Account;
 import com.bank.fx_commission.presentation.web.dto.CreateAccountDTO;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Currency;
 import java.util.UUID;
 
 @RestController
@@ -24,8 +25,8 @@ public class AccountController {
                 UUID.randomUUID(),
                 dto.customerId(),
                 dto.name(),
-                dto.currency(),
-                dto.number()
+                Currency.getInstance(dto.currency()),
+                dto.iban()
         ));
     }
 }

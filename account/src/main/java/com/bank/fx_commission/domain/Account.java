@@ -3,7 +3,9 @@ package com.bank.fx_commission.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.UUID;
 
 @Builder
@@ -11,18 +13,33 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class Account {
+public class Account implements com.bank.fx_commission.shared.account.Account{
     @Setter(AccessLevel.NONE)
     @Id
     private UUID id;
     private UUID customerId;
     private String name;
-    private String currency;
+    @Column(length = 3, nullable = false)
+    private Currency currency;
     @Setter(AccessLevel.NONE)
-    private int balance;
+    private BigDecimal balance;
     @Setter(AccessLevel.NONE)
     private boolean active;
-    private String number;
+    private String iban;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @Override
+    public boolean isBelongsToCustomer(UUID customerId) {
+        return this.customerId.equals(customerId);
+    }
+
+    @Override
+    public UUID id() {
+        return this.id;
+    }
+
+    public boolean supportsCurrency(Currency currency) {
+        return this.currency.equals(currency);
+    }
 }

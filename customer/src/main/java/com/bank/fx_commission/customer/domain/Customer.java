@@ -1,6 +1,5 @@
 package com.bank.fx_commission.customer.domain;
 
-import com.bank.fx_commission.shared.customer.CustomerInterface;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
@@ -14,12 +13,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @Setter
 @Getter
-public class Customer implements CustomerInterface {
+public class Customer implements com.bank.fx_commission.shared.customer.Customer {
     @Setter(AccessLevel.NONE)
     @Id
     private UUID id;
     private String name;
-    @Getter(AccessLevel.NONE)
     private boolean active;
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
@@ -31,4 +29,5 @@ public class Customer implements CustomerInterface {
         this.active = false;
         this.updatedAt = LocalDateTime.now();
     }
+
 }

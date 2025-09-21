@@ -2,6 +2,6 @@ package com.bank.fx_commission.shared.customer;
 
 import java.util.UUID;
 
-public interface CustomerInterface {
+public interface Customer {
     UUID getId();
 }
