@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Service
 @Transactional
-public final class CreateCustomerUseCase implements UseCase<CreateCustomerUseCaseDTO, Customer> {
+public class CreateCustomerUseCase implements UseCase<CreateCustomerUseCaseDTO, Customer> {
     private final CustomerRepository customerRepository;
 
     public CreateCustomerUseCase(CustomerRepository customerRepository) {
@@ -27,7 +27,7 @@ public final class CreateCustomerUseCase implements UseCase<CreateCustomerUseCas
                 .updatedAt(LocalDateTime.now())
                 .build();
 
-        this.customerRepository.save(customer);
+        customerRepository.save(customer);
 
         return customer;
     }

@@ -1,5 +1,6 @@
 package com.bank.fx_commission.customer.domain;
 
+import com.bank.fx_commission.shared.customer.CustomerInterface;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
@@ -13,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Setter
 @Getter
-public class Customer {
+public class Customer implements CustomerInterface {
     @Setter(AccessLevel.NONE)
     @Id
     private UUID id;
