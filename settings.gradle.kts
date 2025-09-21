@@ -9,3 +9,5 @@ include(":customer")
 include(":shared")
 include(":account")
 include("transaction")
+
+include("currency")
