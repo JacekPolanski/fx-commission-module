@@ -33,7 +33,8 @@ public class AccountController {
                         a.getName(),
                         a.getIban(),
                         a.getCurrency().getCurrencyCode(),
-                        a.getBalance().toString()
+                        a.getBalance().toString(),
+                        a.getSpread().getSpreadLevels()
                 ))
                 .toList();
     }

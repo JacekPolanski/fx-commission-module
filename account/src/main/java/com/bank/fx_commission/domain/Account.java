@@ -28,6 +28,9 @@ public class Account implements com.bank.fx_commission.shared.account.Account{
     private String iban;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "spread_id")
+    private Spread spread;
 
     @Override
     public boolean isBelongsToCustomer(UUID customerId) {

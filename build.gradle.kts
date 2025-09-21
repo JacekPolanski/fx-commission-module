@@ -42,13 +42,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-database-postgresql")
+    runtimeOnly("org.postgresql:postgresql")
 
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    runtimeOnly("com.h2database:h2")
-    testRuntimeOnly("com.h2database:h2")
 }
 
 tasks.withType<Test> {

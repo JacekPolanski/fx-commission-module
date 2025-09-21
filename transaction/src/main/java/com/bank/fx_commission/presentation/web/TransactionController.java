@@ -23,13 +23,15 @@ public class TransactionController {
 
     @PostMapping(path = "/initiate")
     public Transaction initiateTransaction(@RequestBody InitiateTransactionDTO dto) {
-        return initiateTransactionUseCase.execute(new InitiateTransactionUseCaseDTO(
-                UUID.randomUUID(),
-                dto.customerId(),
-                dto.sourceAccountIban(),
-                dto.destinationAccountIban(),
-                Money.of(dto.amount(), dto.currency()),
-                dto.title()
-        ));
+        return initiateTransactionUseCase.execute(
+                new InitiateTransactionUseCaseDTO(
+                    UUID.randomUUID(),
+                    dto.customerId(),
+                    dto.sourceAccountIban(),
+                    dto.destinationAccountIban(),
+                    Money.of(dto.amount(), dto.currency()),
+                    dto.title()
+                )
+        );
     }
 }
