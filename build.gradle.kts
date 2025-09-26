@@ -38,6 +38,7 @@ dependencies {
     implementation(project(":account"))
     implementation(project(":customer"))
     implementation(project(":transaction"))
+    implementation(project(":currency"))
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.flywaydb:flyway-core")

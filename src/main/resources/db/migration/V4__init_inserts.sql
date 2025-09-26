@@ -31,14 +31,22 @@ INSERT INTO spread (id, spread_levels) VALUES
         {"threshold": 0, "commission": 5.00}
       ]'::jsonb);
 
- INSERT INTO account (
-     id, customer_id, name, currency, balance, active, iban, created_at, updated_at, spread_id
- ) VALUES
-     ('3f6b58f6-3c6a-4b12-9b80-6d7c3a2f5c11', '3f6a2c2b-9f1e-4a7e-9c8e-2a1b7b1a1e10',
-      'Konto Oszczędnościowe', 'PLN', 125000, TRUE, 'PL-1020-5555-1234-5678-9012-3456', NOW(), NOW(),
-      '11111111-1111-1111-1111-111111111111'
-     ),
-     ('9a2c7dfe-8c3b-4d2e-9f71-0a1b2c3d4e5f', 'a2b4c6d8-e0f2-4a1b-9c3d-5e7f9a1b2c3d',
-      'Savings Account', 'EUR', 9876543, TRUE, 'DE-3704-0044-0532-0130-00', NOW(), NOW(),
-      '44444444-4444-4444-4444-444444444444'
-     );
+INSERT INTO account (
+    id, customer_id, name, currency, balance, active, iban, created_at, updated_at, spread_id
+) VALUES
+      ('3f6b58f6-3c6a-4b12-9b80-6d7c3a2f5c11', '3f6a2c2b-9f1e-4a7e-9c8e-2a1b7b1a1e10',
+       'Konto Oszczędnościowe', 'PLN', 125000, TRUE, 'PL-1020-5555-1234-5678-9012-3456', NOW(), NOW(),
+       '11111111-1111-1111-1111-111111111111'
+      ),
+      ('9a2c7dfe-8c3b-4d2e-9f71-0a1b2c3d4e5f', 'a2b4c6d8-e0f2-4a1b-9c3d-5e7f9a1b2c3d',
+       'Savings Account', 'EUR', 9876543, TRUE, 'DE-3704-0044-0532-0130-00', NOW(), NOW(),
+       '44444444-4444-4444-4444-444444444444'
+      ),
+      ('e1141643-b4a7-497a-9ca9-9b696c5c393b', '3f6a2c2b-9f1e-4a7e-9c8e-2a1b7b1a1e10',
+       'Konto Oszczędnościowe 2', 'GBP', 225000, TRUE, 'GB-1020-5555-1234-5678-9012-3456', NOW(), NOW(),
+       '11111111-1111-1111-1111-111111111111'
+      ),
+      ('f6d0d513-56b5-4f6e-9c9f-94f07b7dabf6', 'a2b4c6d8-e0f2-4a1b-9c3d-5e7f9a1b2c3d',
+       'Savings Account 2', 'USD', 10876543, TRUE, 'US-3704-0044-0532-0130-00', NOW(), NOW(),
+       '44444444-4444-4444-4444-444444444444'
+  );

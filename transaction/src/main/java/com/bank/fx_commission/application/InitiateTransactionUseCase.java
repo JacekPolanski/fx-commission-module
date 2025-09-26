@@ -1,6 +1,7 @@
 package com.bank.fx_commission.application;
 
 import com.bank.fx_commission.application.dto.InitiateTransactionUseCaseDTO;
+import com.bank.fx_commission.application.service.TransactionCommissionCalculator;
 import com.bank.fx_commission.domain.Transaction;
 import com.bank.fx_commission.domain.TransactionRepository;
 import com.bank.fx_commission.shared.UseCase;
@@ -17,15 +18,18 @@ public class InitiateTransactionUseCase implements UseCase<InitiateTransactionUs
     private final TransactionRepository transactionRepository;
     private final AccountFacade accountFacade;
     private final CustomerFacade customerFacade;
+    private final TransactionCommissionCalculator calculator;
 
     InitiateTransactionUseCase(
             TransactionRepository transactionRepository,
             AccountFacade accountFacade,
-            CustomerFacade customerFacade
+            CustomerFacade customerFacade,
+            TransactionCommissionCalculator calculator
     ) {
         this.transactionRepository = transactionRepository;
         this.accountFacade = accountFacade;
         this.customerFacade = customerFacade;
+        this.calculator = calculator;
     }
 
     @Override
@@ -58,6 +62,8 @@ public class InitiateTransactionUseCase implements UseCase<InitiateTransactionUs
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
+
+        transaction = this.calculator.calculate(transaction);
 
         transactionRepository.save(transaction);
 
