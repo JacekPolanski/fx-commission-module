@@ -1,12 +1,12 @@
 package com.bank.fx_commission.application;
 
 import com.bank.fx_commission.application.dto.InitiateTransactionUseCaseDTO;
-import com.bank.fx_commission.application.service.TransactionCommissionCalculator;
 import com.bank.fx_commission.domain.Transaction;
 import com.bank.fx_commission.domain.TransactionRepository;
 import com.bank.fx_commission.shared.UseCase;
 import com.bank.fx_commission.shared.account.Account;
 import com.bank.fx_commission.shared.account.AccountFacade;
+import com.bank.fx_commission.shared.currency.CurrencyRateFacade;
 import com.bank.fx_commission.shared.customer.CustomerFacade;
 import org.springframework.stereotype.Service;
 
@@ -18,18 +18,18 @@ public class InitiateTransactionUseCase implements UseCase<InitiateTransactionUs
     private final TransactionRepository transactionRepository;
     private final AccountFacade accountFacade;
     private final CustomerFacade customerFacade;
-    private final TransactionCommissionCalculator calculator;
+    private final CurrencyRateFacade currencyRateFacade;
 
     InitiateTransactionUseCase(
             TransactionRepository transactionRepository,
             AccountFacade accountFacade,
             CustomerFacade customerFacade,
-            TransactionCommissionCalculator calculator
+            CurrencyRateFacade currencyRateFacade
     ) {
         this.transactionRepository = transactionRepository;
         this.accountFacade = accountFacade;
         this.customerFacade = customerFacade;
-        this.calculator = calculator;
+        this.currencyRateFacade = currencyRateFacade;
     }
 
     @Override
@@ -41,9 +41,6 @@ public class InitiateTransactionUseCase implements UseCase<InitiateTransactionUs
         Account sourceAccount = accountFacade.findAccountByIban(dto.sourceAccountIban());
         if (!sourceAccount.isBelongsToCustomer(dto.customerId())) {
             throw new IllegalArgumentException("Account with iban " + dto.sourceAccountIban() + " not belongs to customer with id " + dto.customerId());
-        }
-        if (!sourceAccount.supportsCurrency(dto.currency())) {
-            throw new IllegalArgumentException("Account with iban " + dto.sourceAccountIban() + " does not support currency " + dto.currency());
         }
 
         Account destinationAccount = accountFacade.findAccountByIban(dto.destinationAccountIban());
@@ -57,13 +54,13 @@ public class InitiateTransactionUseCase implements UseCase<InitiateTransactionUs
                 .destinationAccountId(destinationAccount.id())
                 .sourceCurrency(sourceAccount.getCurrency())
                 .destinationCurrency(destinationAccount.getCurrency())
-                .amount(dto.amount().getNumber().numberValue(BigDecimal.class))
+                .amount(dto.amount())
+                .rate(this.currencyRateFacade.calculateRate(sourceAccount.getCurrency(), destinationAccount.getCurrency()))
                 .title(dto.title())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
-                .build();
-
-        transaction = this.calculator.calculate(transaction);
+                .build()
+                .calculateAccountInDestinationCurrency();
 
         transactionRepository.save(transaction);
 

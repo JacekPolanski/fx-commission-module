@@ -8,6 +8,5 @@ public record InitiateTransactionDTO(
         String sourceAccountIban,
         String destinationAccountIban,
         BigDecimal amount,
-        String currency,
         String title
 ) {}

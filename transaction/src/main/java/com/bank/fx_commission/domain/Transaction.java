@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Currency;
@@ -25,14 +26,18 @@ public class Transaction {
     @Column(length = 3, nullable = false)
     private Currency destinationCurrency;
     private BigDecimal amount;
-    @Setter
     private BigDecimal amountInDestinationCurrency;
-    @Setter
-    private BigDecimal commission;
-    @Setter
+    @Builder.Default
+    private BigDecimal commission = BigDecimal.ZERO;
     private BigDecimal rate;
     private String title;
     private LocalDateTime createdAt;
     @Setter
     private LocalDateTime updatedAt;
+
+    public Transaction calculateAccountInDestinationCurrency() {
+        this.amountInDestinationCurrency = this.amount.multiply(this.rate);
+
+        return this;
+    }
 }

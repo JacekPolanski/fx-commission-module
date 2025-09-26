@@ -1,8 +1,7 @@
 package com.bank.fx_commission.application.dto;
 
-import org.javamoney.moneta.Money;
 
-import java.util.Currency;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public record InitiateTransactionUseCaseDTO(
@@ -10,10 +9,7 @@ public record InitiateTransactionUseCaseDTO(
     UUID customerId,
     String sourceAccountIban,
     String destinationAccountIban,
-    Money amount,
+    BigDecimal amount,
     String title
 ) {
-    public Currency currency() {
-        return Currency.getInstance(amount.getCurrency().getCurrencyCode());
-    }
 }

@@ -4,7 +4,6 @@ import com.bank.fx_commission.application.InitiateTransactionUseCase;
 import com.bank.fx_commission.application.dto.InitiateTransactionUseCaseDTO;
 import com.bank.fx_commission.domain.Transaction;
 import com.bank.fx_commission.presentation.web.dto.InitiateTransactionDTO;
-import org.javamoney.moneta.Money;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +28,7 @@ public class TransactionController {
                     dto.customerId(),
                     dto.sourceAccountIban(),
                     dto.destinationAccountIban(),
-                    Money.of(dto.amount(), dto.currency()),
+                    dto.amount(),
                     dto.title()
                 )
         );

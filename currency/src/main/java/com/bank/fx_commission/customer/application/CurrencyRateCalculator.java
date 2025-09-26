@@ -1,10 +1,10 @@
 package com.bank.fx_commission.customer.application;
 
-import com.bank.fx_commission.customer.domain.CurrencyRate;
 import com.bank.fx_commission.customer.domain.CurrencyRateRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Currency;
 
 @Service
@@ -21,13 +21,21 @@ public class CurrencyRateCalculator {
             return BigDecimal.ONE;
         }
 
-        CurrencyRate sourceCurrency = repository.getReferenceById(to.getCurrencyCode());
-
-        if (BASE_CURRENCY.equals(from)) {
-            return sourceCurrency.getRate();
+        if (from.equals(BASE_CURRENCY)) {
+            return repository.getReferenceById(to.getCurrencyCode()).getRate();
         }
 
-        BigDecimal baseRate = this.calculateRate(BASE_CURRENCY, from);
-        return sourceCurrency.getRate().multiply(baseRate);
+        if (to.equals(BASE_CURRENCY)) {
+            return BigDecimal.ONE.divide(
+                    repository.getReferenceById(from.getCurrencyCode()).getRate(),
+                    10,
+                    RoundingMode.HALF_UP
+            );
+        }
+
+        BigDecimal fromRate = repository.getReferenceById(from.getCurrencyCode()).getRate();
+        BigDecimal toRate = repository.getReferenceById(to.getCurrencyCode()).getRate();
+
+        return toRate.divide(fromRate, 10, RoundingMode.HALF_UP);
     }
 }
