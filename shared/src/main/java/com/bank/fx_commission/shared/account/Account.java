@@ -7,6 +7,5 @@ public interface Account {
     boolean isActive();
     boolean isBelongsToCustomer(UUID customerId);
     UUID id();
-    boolean supportsCurrency(Currency currency);
     Currency getCurrency();
 }

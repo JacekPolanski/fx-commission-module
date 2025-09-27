@@ -1,5 +1,8 @@
 package com.bank.fx_commission.domain;
 
+import com.bank.fx_commission.domain.strategies.CommissionStrategy;
+import com.bank.fx_commission.domain.strategies.FixedStrategy;
+import com.bank.fx_commission.domain.strategies.NoCommissionStrategy;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,7 +45,15 @@ public class Account implements com.bank.fx_commission.shared.account.Account{
         return this.id;
     }
 
-    public boolean supportsCurrency(Currency currency) {
-        return this.currency.equals(currency);
+    public CommissionStrategy getSpreadStrategy() {
+        CommissionStrategy strategy;
+        switch (this.spread.getType()) {
+            case FIXED -> strategy = new FixedStrategy();
+            case PERCENTAGE_OF_TRANSACTIONS_COUNT_MONTHLY -> strategy = new NoCommissionStrategy(); // ToDo: implement
+            case PERCENTAGE_OF_TRANSACTION_AMOUNT -> strategy = new NoCommissionStrategy(); // ToDo: implement
+            default -> strategy = new NoCommissionStrategy();
+        }
+
+        return strategy;
     }
 }

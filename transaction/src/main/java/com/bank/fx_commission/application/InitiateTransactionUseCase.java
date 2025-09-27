@@ -64,7 +64,7 @@ public class InitiateTransactionUseCase implements UseCase<InitiateTransactionUs
             ).setScale(10, RoundingMode.HALF_UP);
         }
 
-        BigDecimal commission = accountFacade.calculateCommission(sourceAccount, dto.amount());
+        BigDecimal commission = accountFacade.calculateCommission(sourceAccount.id(), dto.amount());
 
         Transaction transaction = Transaction.builder()
                 .id(dto.id())
