@@ -4,20 +4,17 @@ import com.bank.fx_commission.application.service.AccountBalanceUpdater;
 import com.bank.fx_commission.application.service.CommissionCalculator;
 import com.bank.fx_commission.domain.Account;
 import com.bank.fx_commission.domain.AccountRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class AccountFacade implements com.bank.fx_commission.shared.account.AccountFacade {
     private final AccountRepository accountRepository;
     private final AccountBalanceUpdater updater;
-
-    AccountFacade(AccountRepository accountRepository, AccountBalanceUpdater updater) {
-        this.accountRepository = accountRepository;
-        this.updater = updater;
-    }
 
     @Override
     public Account findAccountByIban(String iban) {

@@ -6,6 +6,7 @@ import com.bank.fx_commission.domain.Account;
 import com.bank.fx_commission.domain.AccountRepository;
 import com.bank.fx_commission.presentation.web.dto.AccountDTO;
 import com.bank.fx_commission.presentation.web.dto.CreateAccountRequestDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Currency;
@@ -13,15 +14,11 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/account")
 public class AccountController {
     private final CreateAccountUseCase createAccountUseCase;
     private final AccountRepository accountRepository;
-
-    AccountController(CreateAccountUseCase createAccountUseCase, AccountRepository accountRepository) {
-        this.createAccountUseCase = createAccountUseCase;
-        this.accountRepository = accountRepository;
-    }
 
     @GetMapping
     @ResponseBody
