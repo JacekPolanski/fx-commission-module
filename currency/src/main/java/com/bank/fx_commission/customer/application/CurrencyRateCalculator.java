@@ -21,21 +21,22 @@ public class CurrencyRateCalculator {
             return BigDecimal.ONE;
         }
 
-        if (from.equals(BASE_CURRENCY)) {
-            return repository.getReferenceById(to.getCurrencyCode()).getRate();
-        }
+        BigDecimal rate;
 
-        if (to.equals(BASE_CURRENCY)) {
-            return BigDecimal.ONE.divide(
+        if (from.equals(BASE_CURRENCY)) {
+            rate = repository.getReferenceById(to.getCurrencyCode()).getRate();
+        } else if (to.equals(BASE_CURRENCY)) {
+            rate = BigDecimal.ONE.divide(
                     repository.getReferenceById(from.getCurrencyCode()).getRate(),
                     10,
                     RoundingMode.HALF_UP
             );
+        } else {
+            BigDecimal fromRate = repository.getReferenceById(from.getCurrencyCode()).getRate();
+            BigDecimal toRate = repository.getReferenceById(to.getCurrencyCode()).getRate();
+            rate = toRate.divide(fromRate, 10, RoundingMode.HALF_UP);
         }
 
-        BigDecimal fromRate = repository.getReferenceById(from.getCurrencyCode()).getRate();
-        BigDecimal toRate = repository.getReferenceById(to.getCurrencyCode()).getRate();
-
-        return toRate.divide(fromRate, 10, RoundingMode.HALF_UP);
+        return BigDecimal.ONE.divide(rate, 10, RoundingMode.HALF_UP);
     }
 }

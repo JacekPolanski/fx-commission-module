@@ -22,31 +22,31 @@ public class Transaction {
     private UUID sourceAccountId;
     private UUID destinationAccountId;
     @Column(length = 3, nullable = false)
-    private Currency sourceCurrency;
+    private Currency baseCurrency;
     @Column(length = 3, nullable = false)
-    private Currency destinationCurrency;
+    private Currency quoteCurrency;
     @Column(length = 3, nullable = false)
     private Currency referenceCurrency;
     private BigDecimal amountInReferenceCurrency;
-    private BigDecimal amountInSourceCurrency;
-    private BigDecimal amountInDestinationCurrency;
+    private BigDecimal amountInBaseCurrency;
+    private BigDecimal amountInQuoteCurrency;
     @Builder.Default
     private BigDecimal commission = BigDecimal.ZERO;
-    private BigDecimal referenceRate;
-    private BigDecimal rate;
+    private BigDecimal baseToReferenceRate;
+    private BigDecimal baseToQuoteRate;
     private String title;
     private LocalDateTime createdAt;
     @Setter
     private LocalDateTime updatedAt;
 
-    public Transaction calculateAmountInDestinationCurrency() {
-        this.amountInDestinationCurrency = this.amountInSourceCurrency.divide(this.rate, 2, RoundingMode.HALF_UP);
+    public Transaction calculateAmountInQuoteCurrency() {
+        this.amountInQuoteCurrency = this.amountInBaseCurrency.multiply(this.baseToQuoteRate).setScale(2, RoundingMode.HALF_UP);
 
         return this;
     }
 
     public Transaction calculateAmountInReferenceCurrency() {
-        this.amountInReferenceCurrency = this.amountInSourceCurrency.divide(this.referenceRate, 2, RoundingMode.HALF_UP);
+        this.amountInReferenceCurrency = this.amountInBaseCurrency.multiply(this.baseToReferenceRate).setScale(2, RoundingMode.HALF_UP);
 
         return this;
     }

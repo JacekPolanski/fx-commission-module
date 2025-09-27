@@ -44,26 +44,24 @@ public class InitiateTransactionUseCase implements UseCase<InitiateTransactionUs
             throw new IllegalArgumentException("Account with iban " + dto.sourceAccountIban() + " not belongs to customer with id " + dto.customerId());
         }
 
-        Account destinationAccount = accountFacade.findAccountByIban(dto.destinationAccountIban());
-        if (!destinationAccount.isActive()) {
+        Account quoteAccount = accountFacade.findAccountByIban(dto.destinationAccountIban());
+        if (!quoteAccount.isActive()) {
             throw new IllegalArgumentException("Account with iban " + dto.destinationAccountIban() + " not active");
         }
 
-        BigDecimal referenceRate = this.currencyRateFacade.calculateRate(
+        BigDecimal baseToReferenceRate = this.currencyRateFacade.calculateRate(
                 sourceAccount.getCurrency(),
                 this.currencyRateFacade.getReferenceCurrency()
-        );
+        ).setScale(10, RoundingMode.HALF_UP);
 
-        BigDecimal rate = BigDecimal.ONE;
-        if (!sourceAccount.getCurrency().equals(destinationAccount.getCurrency())) {
-            BigDecimal destinationRate = this.currencyRateFacade.calculateRate(
-                    this.currencyRateFacade.getReferenceCurrency(),
-                    destinationAccount.getCurrency()
-            );
-
-            rate = referenceRate.multiply(destinationRate).setScale(10, RoundingMode.HALF_UP);
-        } else if (destinationAccount.getCurrency().equals(this.currencyRateFacade.getReferenceCurrency())) {
-            rate = referenceRate;
+        BigDecimal baseToQuoteRate;
+        if (sourceAccount.getCurrency().equals(quoteAccount.getCurrency())) {
+            baseToQuoteRate = BigDecimal.ONE.setScale(10, RoundingMode.HALF_UP);
+        } else {
+            baseToQuoteRate = this.currencyRateFacade.calculateRate(
+                    sourceAccount.getCurrency(),
+                    quoteAccount.getCurrency()
+            ).setScale(10, RoundingMode.HALF_UP);
         }
 
         BigDecimal commission = accountFacade.calculateCommission(sourceAccount, dto.amount());
@@ -71,19 +69,19 @@ public class InitiateTransactionUseCase implements UseCase<InitiateTransactionUs
         Transaction transaction = Transaction.builder()
                 .id(dto.id())
                 .sourceAccountId(sourceAccount.id())
-                .destinationAccountId(destinationAccount.id())
-                .sourceCurrency(sourceAccount.getCurrency())
-                .destinationCurrency(destinationAccount.getCurrency())
+                .destinationAccountId(quoteAccount.id())
+                .baseCurrency(sourceAccount.getCurrency())
+                .quoteCurrency(quoteAccount.getCurrency())
                 .referenceCurrency(this.currencyRateFacade.getReferenceCurrency())
-                .amountInSourceCurrency(dto.amount())
-                .rate(rate)
+                .amountInBaseCurrency(dto.amount())
+                .baseToQuoteRate(baseToQuoteRate)
                 .commission(commission)
-                .referenceRate(referenceRate)
+                .baseToReferenceRate(baseToReferenceRate)
                 .title(dto.title())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build()
-                .calculateAmountInDestinationCurrency()
+                .calculateAmountInQuoteCurrency()
                 .calculateAmountInReferenceCurrency();
 
         transactionRepository.save(transaction);
