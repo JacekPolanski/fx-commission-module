@@ -35,10 +35,12 @@ subprojects {
 
 dependencies {
     implementation(project(":shared"))
-    implementation(project(":account"))
-    implementation(project(":customer"))
     implementation(project(":transaction"))
+    implementation(project(":account"))
     implementation(project(":currency"))
+    implementation(project(":customer"))
+    implementation(project(":technical-account"))
+
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.flywaydb:flyway-core")

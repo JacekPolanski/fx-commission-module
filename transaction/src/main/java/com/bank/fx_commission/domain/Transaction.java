@@ -18,7 +18,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class Transaction {
+public class Transaction implements com.bank.fx_commission.shared.transcation.Transaction {
     @Id
     private UUID id;
     private UUID sourceAccountId;
@@ -57,6 +57,10 @@ public class Transaction {
     }
 
     public void approve() {
+        if (this.status != TransactionStatus.PENDING) {
+            throw new IllegalStateException("Transaction already approved");
+        }
+
         this.status = TransactionStatus.APPROVED;
         this.updatedAt = LocalDateTime.now();
     }

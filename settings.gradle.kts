@@ -11,3 +11,4 @@ include(":account")
 include("transaction")
 
 include("currency")
+include("technical-account")

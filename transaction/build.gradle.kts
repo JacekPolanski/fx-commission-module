@@ -21,6 +21,7 @@ dependencies {
     implementation("org.springframework:spring-web")
     implementation("javax.money:money-api:1.1")
     implementation("org.javamoney:moneta:1.4.4")
+
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
