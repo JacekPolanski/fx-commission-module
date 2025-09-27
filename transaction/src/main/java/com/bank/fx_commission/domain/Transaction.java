@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -38,6 +40,9 @@ public class Transaction {
     private LocalDateTime createdAt;
     @Setter
     private LocalDateTime updatedAt;
+    @Builder.Default
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    private TransactionStatus status = TransactionStatus.PENDING;
 
     public Transaction calculateAmountInQuoteCurrency() {
         this.amountInQuoteCurrency = this.amountInBaseCurrency.multiply(this.baseToQuoteRate).setScale(2, RoundingMode.HALF_UP);
@@ -47,6 +52,13 @@ public class Transaction {
 
     public Transaction calculateAmountInReferenceCurrency() {
         this.amountInReferenceCurrency = this.amountInBaseCurrency.multiply(this.baseToReferenceRate).setScale(2, RoundingMode.HALF_UP);
+
+        return this;
+    }
+
+    public Transaction approve() {
+        this.status = TransactionStatus.APPROVED;
+        this.updatedAt = LocalDateTime.now();
 
         return this;
     }
