@@ -18,4 +18,9 @@ public class CurrencyRateFacade implements com.bank.fx_commission.shared.currenc
     public BigDecimal calculateRate(Currency fromCurrency, Currency toCurrency) {
         return calculator.calculateRate(fromCurrency, toCurrency);
     }
+
+    @Override
+    public Currency getReferenceCurrency() {
+        return CurrencyRateCalculator.BASE_CURRENCY;
+    }
 }

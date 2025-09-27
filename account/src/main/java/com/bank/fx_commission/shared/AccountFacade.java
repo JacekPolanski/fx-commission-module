@@ -4,6 +4,8 @@ import com.bank.fx_commission.domain.Account;
 import com.bank.fx_commission.domain.AccountRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 public class AccountFacade implements com.bank.fx_commission.shared.account.AccountFacade {
     private final AccountRepository accountRepository;
@@ -15,5 +17,10 @@ public class AccountFacade implements com.bank.fx_commission.shared.account.Acco
     @Override
     public Account findAccountByIban(String iban) {
         return accountRepository.findByIban(iban);
+    }
+
+    @Override
+    public BigDecimal calculateCommission(com.bank.fx_commission.shared.account.Account account, BigDecimal amount) {
+        return BigDecimal.ZERO;
     }
 }

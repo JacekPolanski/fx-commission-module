@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS spread (
     id UUID PRIMARY KEY,
+    type VARCHAR(255) NOT NULL,
     spread_levels JSONB NOT NULL,
 
     CONSTRAINT spread_levels_is_array CHECK (jsonb_typeof(spread_levels) = 'array')

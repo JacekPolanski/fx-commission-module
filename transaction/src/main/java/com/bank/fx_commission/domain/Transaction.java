@@ -5,8 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
 
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.UUID;
@@ -25,18 +25,28 @@ public class Transaction {
     private Currency sourceCurrency;
     @Column(length = 3, nullable = false)
     private Currency destinationCurrency;
-    private BigDecimal amount;
+    @Column(length = 3, nullable = false)
+    private Currency referenceCurrency;
+    private BigDecimal amountInReferenceCurrency;
+    private BigDecimal amountInSourceCurrency;
     private BigDecimal amountInDestinationCurrency;
     @Builder.Default
     private BigDecimal commission = BigDecimal.ZERO;
+    private BigDecimal referenceRate;
     private BigDecimal rate;
     private String title;
     private LocalDateTime createdAt;
     @Setter
     private LocalDateTime updatedAt;
 
-    public Transaction calculateAccountInDestinationCurrency() {
-        this.amountInDestinationCurrency = this.amount.multiply(this.rate);
+    public Transaction calculateAmountInDestinationCurrency() {
+        this.amountInDestinationCurrency = this.amountInSourceCurrency.divide(this.rate, 2, RoundingMode.HALF_UP);
+
+        return this;
+    }
+
+    public Transaction calculateAmountInReferenceCurrency() {
+        this.amountInReferenceCurrency = this.amountInSourceCurrency.divide(this.referenceRate, 2, RoundingMode.HALF_UP);
 
         return this;
     }

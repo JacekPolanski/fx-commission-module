@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 public class Spread {
     @Id
     private UUID id;
+    @JdbcTypeCode(SqlTypes.VARCHAR)
+    private SpreadType type;
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
     private List<SpreadLevel> spreadLevels;

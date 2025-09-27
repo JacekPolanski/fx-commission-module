@@ -3,8 +3,9 @@ VALUES
   ('3f6a2c2b-9f1e-4a7e-9c8e-2a1b7b1a1e10', 'Jan Kowalski', TRUE, now(), now()),
   ('a2b4c6d8-e0f2-4a1b-9c3d-5e7f9a1b2c3d', 'Anna Nowak', TRUE, now(), now());
 
-INSERT INTO spread (id, spread_levels) VALUES
+INSERT INTO spread (id, type, spread_levels) VALUES
     ('11111111-1111-1111-1111-111111111111',
+    'PERCENTAGE_OF_TRANSACTION_AMOUNT',
      '[
         {"threshold": 0,     "commission": 10.00},
         {"threshold": 1000,  "commission": 8.00},
@@ -13,6 +14,7 @@ INSERT INTO spread (id, spread_levels) VALUES
       ]'::jsonb),
 
     ('22222222-2222-2222-2222-222222222222',
+    'PERCENTAGE_OF_TRANSACTIONS_COUNT_MONTHLY',
      '[
         {"threshold": 0,     "commission": 15.00},
         {"threshold": 2000,  "commission": 12.50},
@@ -20,6 +22,7 @@ INSERT INTO spread (id, spread_levels) VALUES
       ]'::jsonb),
 
     ('33333333-3333-3333-3333-333333333333',
+    'PERCENTAGE_OF_TRANSACTION_AMOUNT',
      '[
         {"threshold": 0,      "commission": 5.00},
         {"threshold": 10000,  "commission": 4.25},
@@ -27,6 +30,7 @@ INSERT INTO spread (id, spread_levels) VALUES
         {"threshold": 100000, "commission": 2.00}
       ]'::jsonb),
     ('44444444-4444-4444-4444-444444444444',
+    'FIXED',
      '[
         {"threshold": 0, "commission": 5.00}
       ]'::jsonb);

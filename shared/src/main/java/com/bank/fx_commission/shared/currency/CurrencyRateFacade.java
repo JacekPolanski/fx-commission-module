@@ -6,4 +6,5 @@ import java.util.Currency;
 
 public interface CurrencyRateFacade {
     BigDecimal calculateRate(Currency fromCurrency, Currency toCurrency);
+    Currency getReferenceCurrency();
 }
