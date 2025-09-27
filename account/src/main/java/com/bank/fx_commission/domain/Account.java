@@ -56,4 +56,16 @@ public class Account implements com.bank.fx_commission.shared.account.Account{
 
         return strategy;
     }
+
+    public void subtractFromTheBalance(BigDecimal amountInBaseCurrency) throws IllegalArgumentException {
+        if (this.balance.compareTo(amountInBaseCurrency) < 0) {
+            throw new IllegalArgumentException("Insufficient funds");
+        }
+
+        this.balance = this.balance.subtract(amountInBaseCurrency);
+    }
+
+    public void addToTheBalance(BigDecimal amount) {
+        this.balance = this.balance.add(amount);
+    }
 }

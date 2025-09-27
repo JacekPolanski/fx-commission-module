@@ -1,4 +1,4 @@
-package com.bank.fx_commission.application.commsion;
+package com.bank.fx_commission.application.service;
 
 import com.bank.fx_commission.domain.strategies.CommissionStrategy;
 import com.bank.fx_commission.domain.Account;

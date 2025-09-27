@@ -56,9 +56,14 @@ public class Transaction {
         return this;
     }
 
-    public Transaction approve() {
+    public void approve() {
         this.status = TransactionStatus.APPROVED;
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public Transaction applyCommission(BigDecimal commission) {
+        this.commission = commission;
+        this.amountInBaseCurrency = this.amountInBaseCurrency.add(commission);
 
         return this;
     }

@@ -75,14 +75,14 @@ public class InitiateTransactionUseCase implements UseCase<InitiateTransactionUs
                 .referenceCurrency(this.currencyRateFacade.getReferenceCurrency())
                 .amountInBaseCurrency(dto.amount())
                 .baseToQuoteRate(baseToQuoteRate)
-                .commission(commission)
                 .baseToReferenceRate(baseToReferenceRate)
                 .title(dto.title())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build()
                 .calculateAmountInQuoteCurrency()
-                .calculateAmountInReferenceCurrency();
+                .calculateAmountInReferenceCurrency()
+                .applyCommission(commission);
 
         transactionRepository.save(transaction);
 
