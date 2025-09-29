@@ -17,8 +17,10 @@ This repository implements the practical task:
 ## Contents
 
 - [Project Goal](#project-goal)
+- [Highlights](#highlights)
 - [Domain Overview](#domain-overview)
 - [Architecture Overview](#architecture-overview)
+- [Database and Migrations (Flyway)](#database-and-migrations-flyway)
 - [Running the App](#running-the-app)
 - [API Overview](#api-overview)
     - [Accounts API](#accounts-api)
@@ -30,6 +32,7 @@ This repository implements the practical task:
 - [Code Style and Checkstyle](#code-style-and-checkstyle)
 - [Tests](#tests)
 - [Notes and Assumptions](#notes-and-assumptions)
+- [Future Improvements](#future-improvements)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -47,6 +50,22 @@ Provide a clear, testable module to:
 - Book spread into a technical account while keeping destination credit net of spread (spread is not visible on the destination account).
 
 ---
+
+## Highlights
+
+- Multi-module Gradle structure: separate modules (e.g., account, currency, customer, transaction, technical-account, shared) to isolate domains and promote code reuse.
+- Gradle Kotlin DSL: typed, readable build scripts in build.gradle.kts.
+- Layered architecture per module: domain / application / presentation (REST) with explicit DTO contracts at the API boundary.
+- Application event listeners: dedicated listener for commission/ledger persistence to separate side effects from transaction logic.
+- Technical Account Ledger: explicit revenue booking stream for commissions with auditable entries.
+- Checkstyle: consistent code style enforced via a shared configuration.
+- Postman collection: ready-made requests for quick start and API exploration.
+- Java 21 LTS + Spring Boot 3.5.x: modern runtime and framework baseline.
+- Flyway: automated database migrations plus init (seed) data for fast local onboarding.
+- MIT License: clear usage and contribution terms.
+
+---
+
 
 ## Domain Overview
 
@@ -74,6 +93,16 @@ Currencies/rates can be static for demo purposes.
 - Strategies:
     - FixedStrategy: commission = amount × fixedPercent / 100.
     - TransactionAmountStrategy (dynamic): commission = amount × matchedTierPercent / 100 (HALF_UP, 2 decimals).
+
+---
+
+## Database and Migrations (Flyway)
+
+- This project uses Flyway for database schema versioning and repeatable migrations.
+- Versioned migrations define and evolve the schema; repeatable scripts and seed routines provide initial demo data (init data) to make the API usable out of the box.
+- Migrations run automatically on application startup. No manual steps are required for local development.
+- The seeded demo data covers core domain entities so you can immediately create spreads and perform sample transactions after the first run.
+- For production, adjust Flyway settings and seed strategy according to your deployment pipeline (e.g., control which environments apply demo data).
 
 ---
 
@@ -263,6 +292,49 @@ Typical test report locations (Gradle):
 - For DYNAMIC spread, the matched level is the highest threshold ≤ amount.
 - Spread is accounted to a technical account and not shown on the destination account balance.
 - IDs are UUIDs; balances are decimals represented as strings in responses.
+
+---
+
+## Future Improvements
+
+- Account deactivation
+    - Status flag (ACTIVE/INACTIVE), soft-deactivation preserving history.
+    - Validation to block initiating/approving transactions for inactive accounts.
+    - Endpoints: PUT `/api/account/{id}/deactivate`, PUT `/api/account/{id}/activate`.
+
+- Users (authentication and authorization)
+    - Sign-up/sign-in (JWT/OAuth2), roles and permissions at the API level.
+    - Associate operations (accounts, transactions) with user identity for auditing.
+
+- Admin role
+    - Admin endpoints/panel to manage spread policies, account locks, and demo seed controls.
+    - Audit and metrics overview, user and permission management.
+
+- Improved error handling
+    - Standardized error response model (e.g., RFC 7807 Problem Details) with machine-readable error codes and human-friendly messages.
+    - Consistent mapping for validation, business, and infrastructure errors via a global exception handler; include correlation/trace ID.
+    - Clear error taxonomy and documentation, with examples in the API docs (OpenAPI/Swagger).
+    - Structured logging (key-value) around error paths and optional rate limiting for repeated error storms.
+
+- More tests
+    - Unit: broader coverage for services/use-cases, validators, mappers, and edge cases; parameterized and property-based tests for amount/threshold logic.
+    - Integration: Testcontainers (e.g., PostgreSQL) for repository and transactional flows; verify technical account postings and idempotency.
+    - API/Contract: REST Assured + JSON schemas or Spring Cloud Contract; optionally Spring REST Docs to auto-generate API snippets.
+    - Concurrency: tests for optimistic locking/races on balances and transaction state transitions.
+    - Quality gates: mutation testing (Pitest) on commission strategies; coverage thresholds in CI; performance smoke tests on hot paths.
+
+- Fetch a single transaction
+    - Endpoint: GET `/api/transaction/{id}` returning full transaction details, including applied spread and technical account entries.
+
+- Abandoning transactions / automatic timeout
+    - Status flow: PENDING → ABANDONED after TTL (e.g., 15 minutes) if not approved.
+    - Mechanism: scheduled job/cron or outbox-driven worker; idempotent abandonment marking.
+    - Accounting rules: no balance changes on abandonment; release any held funds if reservations are introduced.
+
+- Add customers for users
+    - Customer model and User → Customer relationship (multi-tenancy).
+    - Data visibility scoped to the customer context (accounts, transactions).
+    - Customer-level reports and limits (amount caps, spread policies).
 
 ---
 
