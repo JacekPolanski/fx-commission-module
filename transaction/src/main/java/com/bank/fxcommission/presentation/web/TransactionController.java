@@ -2,11 +2,11 @@ package com.bank.fxcommission.presentation.web;
 
 import com.bank.fxcommission.application.ApproveTransactionUseCase;
 import com.bank.fxcommission.application.InitiateTransactionUseCase;
-import com.bank.fxcommission.application.dto.ApproveTransactionUseCaseDTO;
-import com.bank.fxcommission.application.dto.InitiateTransactionUseCaseDTO;
+import com.bank.fxcommission.application.dto.ApproveTransactionUseCaseDto;
+import com.bank.fxcommission.application.dto.InitiateTransactionUseCaseDto;
 import com.bank.fxcommission.domain.Transaction;
-import com.bank.fxcommission.presentation.web.dto.InitiateTransactionDTO;
-import com.bank.fxcommission.presentation.web.dto.TransactionResponseDTO;
+import com.bank.fxcommission.presentation.web.dto.InitiateTransactionDto;
+import com.bank.fxcommission.presentation.web.dto.TransactionResponseDto;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,10 +23,10 @@ public class TransactionController {
   private final ApproveTransactionUseCase approveTransactionUseCase;
 
   @PostMapping(path = "/initiate")
-  public TransactionResponseDTO initiateTransaction(@RequestBody InitiateTransactionDTO dto) {
+  public TransactionResponseDto initiateTransaction(@RequestBody InitiateTransactionDto dto) {
     Transaction transaction =
         this.initiateTransactionUseCase.execute(
-            new InitiateTransactionUseCaseDTO(
+            new InitiateTransactionUseCaseDto(
                 UUID.randomUUID(),
                 dto.customerId(),
                 dto.sourceAccountIban(),
@@ -34,12 +34,12 @@ public class TransactionController {
                 dto.amount(),
                 dto.title()));
 
-    return TransactionResponseDTO.fromTransaction(transaction);
+    return TransactionResponseDto.fromTransaction(transaction);
   }
 
   @PostMapping(path = "/{id}/approve")
-  public TransactionResponseDTO approveTransaction(@PathVariable("id") UUID id) {
-    return TransactionResponseDTO.fromTransaction(
-        this.approveTransactionUseCase.execute(new ApproveTransactionUseCaseDTO(id)));
+  public TransactionResponseDto approveTransaction(@PathVariable("id") UUID id) {
+    return TransactionResponseDto.fromTransaction(
+        this.approveTransactionUseCase.execute(new ApproveTransactionUseCaseDto(id)));
   }
 }
