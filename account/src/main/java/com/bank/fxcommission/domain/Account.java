@@ -3,6 +3,7 @@ package com.bank.fxcommission.domain;
 import com.bank.fxcommission.domain.strategies.CommissionStrategy;
 import com.bank.fxcommission.domain.strategies.FixedStrategy;
 import com.bank.fxcommission.domain.strategies.NoCommissionStrategy;
+import com.bank.fxcommission.domain.strategies.TransactionAmountStrategy;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -58,20 +59,6 @@ public class Account implements com.bank.fxcommission.shared.account.Account {
   @Override
   public UUID id() {
     return this.id;
-  }
-
-  public CommissionStrategy getSpreadStrategy() {
-    final CommissionStrategy strategy;
-    switch (this.spread.getType()) {
-      case FIXED -> strategy = new FixedStrategy();
-      case PERCENTAGE_OF_TRANSACTIONS_COUNT_MONTHLY ->
-          strategy = new NoCommissionStrategy(); // ToDo: implement
-      case PERCENTAGE_OF_TRANSACTION_AMOUNT ->
-          strategy = new NoCommissionStrategy(); // ToDo: implement
-      default -> strategy = new NoCommissionStrategy();
-    }
-
-    return strategy;
   }
 
   public void subtractFromTheBalance(BigDecimal amountInBaseCurrency)

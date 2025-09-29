@@ -5,7 +5,7 @@ VALUES
 
 INSERT INTO spread (id, type, spread_levels) VALUES
     ('11111111-1111-1111-1111-111111111111',
-    'PERCENTAGE_OF_TRANSACTION_AMOUNT',
+    'TRANSACTION_AMOUNT',
      '[
         {"threshold": 0,     "commission": 10.00},
         {"threshold": 1000,  "commission": 8.00},
@@ -22,7 +22,7 @@ INSERT INTO spread (id, type, spread_levels) VALUES
       ]'::jsonb),
 
     ('33333333-3333-3333-3333-333333333333',
-    'PERCENTAGE_OF_TRANSACTION_AMOUNT',
+    'TRANSACTION_AMOUNT',
      '[
         {"threshold": 0,      "commission": 5.00},
         {"threshold": 10000,  "commission": 4.25},
