@@ -322,6 +322,17 @@ Typical test report locations (Gradle):
     - API/Contract: REST Assured + JSON schemas or Spring Cloud Contract; optionally Spring REST Docs to auto-generate API snippets.
     - Concurrency: tests for optimistic locking/races on balances and transaction state transitions.
     - Quality gates: mutation testing (Pitest) on commission strategies; coverage thresholds in CI; performance smoke tests on hot paths.
+- 
+- Logging
+    - Add consistent logging at INFO/DEBUG/WARN/ERROR levels.
+    - Structured logs (e.g., JSON) with request correlation (trace/correlation ID) and key domain fields.
+    - Mask sensitive data and enrich logs with contextual metadata (MDC).
+    - Log business events (transactions, commission charges) and timing metrics.
+
+- Data validation
+    - Input validation at the API layer (e.g., validation annotations for DTOs) and business rule validation in the application layer.
+    - Consistent validation error messages mapped to a standard error format.
+    - Additional rules: valid currency (ISO 4217), value ranges (amounts, thresholds), resource uniqueness/existence.
 
 - Fetch a single transaction
     - Endpoint: GET `/api/transaction/{id}` returning full transaction details, including applied spread and technical account entries.
