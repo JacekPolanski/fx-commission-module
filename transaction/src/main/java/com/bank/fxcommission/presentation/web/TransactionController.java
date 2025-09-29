@@ -5,15 +5,14 @@ import com.bank.fxcommission.application.InitiateTransactionUseCase;
 import com.bank.fxcommission.application.dto.ApproveTransactionUseCaseDto;
 import com.bank.fxcommission.application.dto.InitiateTransactionUseCaseDto;
 import com.bank.fxcommission.domain.Transaction;
+import com.bank.fxcommission.domain.TransactionRepository;
 import com.bank.fxcommission.presentation.web.dto.InitiateTransactionDto;
 import com.bank.fxcommission.presentation.web.dto.TransactionResponseDto;
+
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/transaction")
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransactionController {
   private final InitiateTransactionUseCase initiateTransactionUseCase;
   private final ApproveTransactionUseCase approveTransactionUseCase;
+  private final TransactionRepository transactionRepository;
 
   @PostMapping(path = "/initiate")
   public TransactionResponseDto initiateTransaction(@RequestBody InitiateTransactionDto dto) {
@@ -41,5 +41,13 @@ public class TransactionController {
   public TransactionResponseDto approveTransaction(@PathVariable("id") UUID id) {
     return TransactionResponseDto.fromTransaction(
         this.approveTransactionUseCase.execute(new ApproveTransactionUseCaseDto(id)));
+  }
+
+  @GetMapping
+  @ResponseBody
+  public List<TransactionResponseDto> getAllTransactions() {
+    return this.transactionRepository.findAll().stream()
+        .map(TransactionResponseDto::fromTransaction)
+        .toList();
   }
 }
