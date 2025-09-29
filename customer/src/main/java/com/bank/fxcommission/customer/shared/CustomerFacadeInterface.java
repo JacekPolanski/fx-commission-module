@@ -15,7 +15,7 @@ public class CustomerFacadeInterface implements CustomerFacade {
 
   @Override
   public boolean isCustomerActive(UUID customerId) {
-    Optional<Customer> customer = this.repository.findById(customerId);
+    final Optional<Customer> customer = this.repository.findById(customerId);
 
     return customer.map(Customer::isActive).orElse(false);
   }

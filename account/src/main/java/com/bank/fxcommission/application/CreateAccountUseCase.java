@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class CreateAccountUseCase implements UseCase<CreateAccountUseCaseDto, Account> {
@@ -23,7 +22,7 @@ public class CreateAccountUseCase implements UseCase<CreateAccountUseCaseDto, Ac
       throw new IllegalArgumentException("Customer with id " + dto.customerId() + " not found");
     }
 
-    Account account =
+    final Account account =
         Account.builder()
             .id(dto.id())
             .customerId(dto.customerId())

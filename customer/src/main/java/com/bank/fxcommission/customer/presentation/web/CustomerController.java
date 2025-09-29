@@ -44,7 +44,8 @@ public class CustomerController {
   public Customer deactivate(@PathVariable UUID id) {
     try {
       return this.deactivateCustomerUseCase.execute(id);
-    } catch (IllegalArgumentException e) {
+    }
+    catch (IllegalArgumentException e) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
     }
   }

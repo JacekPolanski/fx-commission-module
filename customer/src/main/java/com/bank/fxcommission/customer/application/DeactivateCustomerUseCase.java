@@ -16,7 +16,7 @@ public class DeactivateCustomerUseCase implements UseCase<UUID, Customer> {
   private final CustomerRepository repository;
 
   public Customer execute(UUID customerId) {
-    Optional<Customer> customer = this.repository.findById(customerId);
+    final Optional<Customer> customer = this.repository.findById(customerId);
     if (customer.isPresent()) {
       customer.get().deactivate();
       this.repository.save(customer.get());

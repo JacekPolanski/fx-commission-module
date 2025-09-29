@@ -7,7 +7,6 @@ import java.util.Currency;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class CurrencyRateCalculator {
@@ -19,7 +18,7 @@ public class CurrencyRateCalculator {
       return BigDecimal.ONE;
     }
 
-    BigDecimal rate;
+    final BigDecimal rate;
 
     if (from.equals(BASE_CURRENCY)) {
       rate = repository.getReferenceById(to.getCurrencyCode()).getRate();
@@ -30,8 +29,8 @@ public class CurrencyRateCalculator {
               10,
               RoundingMode.HALF_UP);
     } else {
-      BigDecimal fromRate = repository.getReferenceById(from.getCurrencyCode()).getRate();
-      BigDecimal toRate = repository.getReferenceById(to.getCurrencyCode()).getRate();
+      final BigDecimal fromRate = repository.getReferenceById(from.getCurrencyCode()).getRate();
+      final BigDecimal toRate = repository.getReferenceById(to.getCurrencyCode()).getRate();
       rate = toRate.divide(fromRate, 10, RoundingMode.HALF_UP);
     }
 

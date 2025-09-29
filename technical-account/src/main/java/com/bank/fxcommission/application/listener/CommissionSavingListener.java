@@ -25,7 +25,7 @@ public class CommissionSavingListener {
         event.getSource().getCommission(),
         event.getSource().getReferenceCurrency());
 
-    TechnicalAccountLedger ledger =
+    final TechnicalAccountLedger ledger =
         TechnicalAccountLedger.builder()
             .id(UUID.randomUUID())
             .transactionId(event.getSource().getId())

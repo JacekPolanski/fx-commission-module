@@ -24,7 +24,7 @@ public class TransactionController {
 
   @PostMapping(path = "/initiate")
   public TransactionResponseDto initiateTransaction(@RequestBody InitiateTransactionDto dto) {
-    Transaction transaction =
+    final Transaction transaction =
         this.initiateTransactionUseCase.execute(
             new InitiateTransactionUseCaseDto(
                 UUID.randomUUID(),

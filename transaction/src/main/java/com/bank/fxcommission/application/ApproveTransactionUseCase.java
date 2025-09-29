@@ -22,7 +22,7 @@ public class ApproveTransactionUseCase
   @Override
   @Transactional
   public Transaction execute(ApproveTransactionUseCaseDto dto) {
-    Transaction transaction = this.transactionRepository.getReferenceById(dto.id());
+    final Transaction transaction = this.transactionRepository.getReferenceById(dto.id());
     transaction.approve();
     this.transactionRepository.save(transaction);
 

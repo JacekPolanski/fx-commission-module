@@ -9,7 +9,6 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @RequiredArgsConstructor
 public class AccountFacade implements com.bank.fxcommission.shared.account.AccountFacade {
@@ -23,8 +22,8 @@ public class AccountFacade implements com.bank.fxcommission.shared.account.Accou
 
   @Override
   public BigDecimal calculateCommission(UUID accountId, BigDecimal amount) {
-    Account account = accountRepository.findById(accountId).orElseThrow();
-    CommissionCalculator calculator = new CommissionCalculator(account.getSpreadStrategy());
+    final Account account = accountRepository.findById(accountId).orElseThrow();
+    final CommissionCalculator calculator = new CommissionCalculator(account.getSpreadStrategy());
 
     return calculator.calculateCommission(account, amount);
   }

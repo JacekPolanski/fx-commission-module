@@ -20,7 +20,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Builder
 @Entity
 @NoArgsConstructor
@@ -62,7 +61,7 @@ public class Account implements com.bank.fxcommission.shared.account.Account {
   }
 
   public CommissionStrategy getSpreadStrategy() {
-    CommissionStrategy strategy;
+    final CommissionStrategy strategy;
     switch (this.spread.getType()) {
       case FIXED -> strategy = new FixedStrategy();
       case PERCENTAGE_OF_TRANSACTIONS_COUNT_MONTHLY ->

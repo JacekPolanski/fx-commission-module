@@ -16,7 +16,7 @@ public class CreateCustomerUseCase implements UseCase<CreateCustomerUseCaseDto, 
   private final CustomerRepository customerRepository;
 
   public Customer execute(CreateCustomerUseCaseDto customerDto) {
-    Customer customer =
+    final Customer customer =
         Customer.builder()
             .id(customerDto.id())
             .name(customerDto.name())
