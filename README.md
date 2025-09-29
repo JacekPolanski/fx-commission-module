@@ -23,6 +23,7 @@ This repository implements the practical task:
 - [API Overview](#api-overview)
     - [Accounts API](#accounts-api)
     - [Transactions API](#transactions-api)
+    - [Technical Account API](#technical-account-api)
 - [Commission Strategies](#commission-strategies)
 - [Error Handling](#error-handling)
 - [Postman Collection (import and usage)](#postman-collection)
@@ -31,7 +32,6 @@ This repository implements the practical task:
 - [Notes and Assumptions](#notes-and-assumptions)
 - [Contributing](#contributing)
 - [License](#license)
-
 
 ---
 
@@ -138,6 +138,24 @@ Response model (TransactionResponseDto):
 - Contains identifiers, status, amounts, applied spread, timestamps, etc.
 </details>
 
+<details>
+<summary><strong>Technical Account API</strong></summary>
+
+Base path: `/api/technical-account`
+
+- GET `/api/technical-account` — list technical account ledger entries (commission postings).
+- Use this endpoint to inspect inflows to the technical account — this is where commissions are recorded per transaction.
+
+Response model (TechnicalAccountDto):
+- `id: UUID`
+- `transactionId: UUID`
+- `credit: string (decimal as string)`
+- `currency: string (ISO 4217)`
+- `description: string`
+- `createdAt: string (ISO-8601 datetime)`
+- `updatedAt: string (ISO-8601 datetime)`
+</details>
+
 ---
 
 ## Commission Strategies
@@ -157,6 +175,7 @@ Rounding:
 Accounting rules:
 - Spread is added to the source-side total cost, not credited to destination.
 - Spread is booked as revenue to a technical account.
+- You can view the recorded commission inflows under: `GET /api/technical-account` (Technical Account API).
 
 ---
 

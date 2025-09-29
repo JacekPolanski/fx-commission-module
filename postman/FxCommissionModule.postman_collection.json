@@ -548,6 +548,33 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "TechnicalAccount",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/technical-account",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"technical-account"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
