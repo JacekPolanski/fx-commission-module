@@ -1,17 +1,13 @@
 package com.bank.fxcommission.presentation.web;
 
-import com.bank.fxcommission.application.AddSpreadLevelToAccountUseCase;
-import com.bank.fxcommission.application.CreateAccountUseCase;
-import com.bank.fxcommission.application.RemoveSpreadLevelFromAccountUseCase;
-import com.bank.fxcommission.application.UpdateSpreadLevelInAccountUseCase;
-import com.bank.fxcommission.application.dto.AddSpreadLevelToAccountUseCaseDto;
-import com.bank.fxcommission.application.dto.CreateAccountUseCaseDto;
-import com.bank.fxcommission.application.dto.RemoveSpreadLevelFromAccountUseCaseDto;
-import com.bank.fxcommission.application.dto.UpdateSpreadLevelInAccountUseCaseDto;
+import com.bank.fxcommission.application.*;
+import com.bank.fxcommission.application.dto.*;
 import com.bank.fxcommission.domain.AccountRepository;
+import com.bank.fxcommission.domain.SpreadType;
 import com.bank.fxcommission.presentation.web.dto.AccountDto;
-import com.bank.fxcommission.presentation.web.dto.SpreadLevelDto;
 import com.bank.fxcommission.presentation.web.dto.CreateAccountRequestDto;
+import com.bank.fxcommission.presentation.web.dto.SpreadLevelDto;
+import com.bank.fxcommission.presentation.web.dto.UpdateAccountDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +24,7 @@ public class AccountController {
   private final AddSpreadLevelToAccountUseCase addSpreadLevelToAccountUseCase;
   private final UpdateSpreadLevelInAccountUseCase updateSpreadLevelInAccountUseCase;
   private final RemoveSpreadLevelFromAccountUseCase removeSpreadLevelFromAccountUseCase;
+  private final UpdateAccountUseCase updateAccountUseCase;
 
   @GetMapping
   @ResponseBody
@@ -83,5 +80,15 @@ public class AccountController {
     return AccountDto.fromAccount(
         removeSpreadLevelFromAccountUseCase.execute(
             new RemoveSpreadLevelFromAccountUseCaseDto(id, spreadLevelDto.threshold())));
+  }
+
+  @PutMapping("/{id}")
+  @ResponseBody
+  public AccountDto updateAccount(
+      @PathVariable("id") UUID id, @RequestBody UpdateAccountDto accountDto) {
+    return AccountDto.fromAccount(
+        this.updateAccountUseCase.execute(
+            new UpdateAccountUseCaseDto(
+                id, accountDto.name(), SpreadType.valueOf(accountDto.spreadType()))));
   }
 }

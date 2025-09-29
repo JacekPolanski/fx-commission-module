@@ -1,31 +1,19 @@
 package com.bank.fxcommission.domain;
 
-import com.bank.fxcommission.domain.strategies.CommissionStrategy;
-import com.bank.fxcommission.domain.strategies.FixedStrategy;
-import com.bank.fxcommission.domain.strategies.NoCommissionStrategy;
-import com.bank.fxcommission.domain.strategies.TransactionAmountStrategy;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.UUID;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 public class Account implements com.bank.fxcommission.shared.account.Account {
   @Setter(AccessLevel.NONE)
   @Id
@@ -72,5 +60,11 @@ public class Account implements com.bank.fxcommission.shared.account.Account {
 
   public void addToTheBalance(BigDecimal amount) {
     this.balance = this.balance.add(amount);
+  }
+
+  public Account setSpreadType(SpreadType spreadType) {
+    this.spread.setType(spreadType);
+
+    return this;
   }
 }
