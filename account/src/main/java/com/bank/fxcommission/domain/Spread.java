@@ -3,7 +3,11 @@ package com.bank.fxcommission.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -12,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -34,7 +39,9 @@ public class Spread {
 
   public Map<Integer, BigDecimal> getSpreadLevels() {
     return spreadLevels.stream()
-        .collect(Collectors.toMap(SpreadLevel::threshold, SpreadLevel::commission));
+        .collect(
+            Collectors.toMap(
+                SpreadLevel::threshold, SpreadLevel::commission, (a, b) -> b, TreeMap::new));
   }
 
   public Spread addSpreadLevel(int threshold, BigDecimal commission) {
@@ -44,19 +51,6 @@ public class Spread {
     }
     this.spreadLevels.add(new SpreadLevel(threshold, commission));
     return this;
-  }
-
-  public Spread updateSpreadLevel(int threshold, BigDecimal commission) {
-    final ListIterator<SpreadLevel> it = this.spreadLevels.listIterator();
-    while (it.hasNext()) {
-      final SpreadLevel level = it.next();
-      if (level.threshold() == threshold) {
-        it.set(new SpreadLevel(threshold, commission));
-        return this;
-      }
-    }
-    throw new IllegalArgumentException(
-        "Spread level with the given threshold does not exist: " + threshold);
   }
 
   public Spread removeSpreadLevel(int threshold) {
