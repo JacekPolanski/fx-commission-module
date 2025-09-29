@@ -7,20 +7,17 @@ import com.bank.fx_commission.application.dto.InitiateTransactionUseCaseDTO;
 import com.bank.fx_commission.domain.Transaction;
 import com.bank.fx_commission.presentation.web.dto.InitiateTransactionDTO;
 import com.bank.fx_commission.presentation.web.dto.TransactionResponseDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/transaction")
+@RequiredArgsConstructor
 public class TransactionController {
     private final InitiateTransactionUseCase initiateTransactionUseCase;
     private final ApproveTransactionUseCase approveTransactionUseCase;
-
-    TransactionController(InitiateTransactionUseCase initiateTransactionUseCase, ApproveTransactionUseCase approveTransactionUseCase) {
-        this.initiateTransactionUseCase = initiateTransactionUseCase;
-        this.approveTransactionUseCase = approveTransactionUseCase;
-    }
 
     @PostMapping(path = "/initiate")
     public TransactionResponseDTO initiateTransaction(@RequestBody InitiateTransactionDTO dto) {
