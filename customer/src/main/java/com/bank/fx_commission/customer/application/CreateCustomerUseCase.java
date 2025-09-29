@@ -4,6 +4,7 @@ import com.bank.fx_commission.customer.application.dto.CreateCustomerUseCaseDTO;
 import com.bank.fx_commission.customer.domain.Customer;
 import com.bank.fx_commission.customer.domain.CustomerRepository;
 import com.bank.fx_commission.shared.UseCase;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,12 +12,9 @@ import java.time.LocalDateTime;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CreateCustomerUseCase implements UseCase<CreateCustomerUseCaseDTO, Customer> {
     private final CustomerRepository customerRepository;
-
-    public CreateCustomerUseCase(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
 
     public Customer execute(CreateCustomerUseCaseDTO customerDto) {
         Customer customer = Customer.builder()

@@ -7,6 +7,7 @@ import com.bank.fx_commission.customer.domain.Customer;
 import com.bank.fx_commission.customer.domain.CustomerRepository;
 import com.bank.fx_commission.customer.presentation.web.dto.CustomerDTO;
 import com.bank.fx_commission.customer.presentation.web.dto.CreateCustomerRequestDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,20 +18,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/customer")
+@RequiredArgsConstructor
 public class CustomerController {
     private final CreateCustomerUseCase createCustomerUseCase;
     private final DeactivateCustomerUseCase deactivateCustomerUseCase;
     private final CustomerRepository customerRepository;
-
-    public CustomerController(
-            CreateCustomerUseCase createCustomerUseCase,
-            DeactivateCustomerUseCase deactivateCustomerUseCase,
-            CustomerRepository customerRepository
-    ) {
-        this.createCustomerUseCase = createCustomerUseCase;
-        this.deactivateCustomerUseCase = deactivateCustomerUseCase;
-        this.customerRepository = customerRepository;
-    }
 
     @GetMapping
     @ResponseBody
