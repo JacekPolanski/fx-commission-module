@@ -1,6 +1,7 @@
 package com.bank.fx_commission.customer.application;
 
 import com.bank.fx_commission.customer.domain.CurrencyRateRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -8,13 +9,10 @@ import java.math.RoundingMode;
 import java.util.Currency;
 
 @Service
+@RequiredArgsConstructor
 public class CurrencyRateCalculator {
     public static final Currency BASE_CURRENCY = Currency.getInstance("EUR");
     private final CurrencyRateRepository repository;
-
-    public CurrencyRateCalculator(CurrencyRateRepository repository) {
-        this.repository = repository;
-    }
 
     public BigDecimal calculateRate(Currency from, Currency to) {
         if (from.equals(to)) {
