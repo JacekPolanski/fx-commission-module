@@ -2,4 +2,4 @@ package com.bank.fxcommission.customer.application.dto;
 
 import java.util.UUID;
 
-public record CreateCustomerUseCaseDTO(UUID id, String name) {}
+public record CreateCustomerUseCaseDto(UUID id, String name) {}
